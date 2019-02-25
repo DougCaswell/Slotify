@@ -10,6 +10,17 @@
             $this->errorArray = array();
         }
 
+        public function login($username, $password) {
+            $pw = md5($password);
+            $query = mysqli_query($this->con, "SELECT * FROM users WHERE username='$username' AND password='$pw'");
+            if(mysqli_num_rows($query) == 1) {
+                return true;
+            } else {
+                array_push($this->errorArray, Constants::$loginFailed);
+                return false;
+            }
+        }
+
         public function register($username, $firstName, $lastName, $email, $email2, $password, $password2) {
             $this->validateUsername($username);
             $this->validateFirstName($firstName);
@@ -34,7 +45,7 @@
         }
 
         private function insertUserDetails($username, $firstName, $lastName, $email, $password) {
-            $encryptedPassword = md5($pw); //Need to research stronger encryption method
+            $encryptedPassword = md5($password); //Need to research stronger encryption method
             $profilePic = 'assets/images/profile-pics/defaultPhoto.svg';
             $date = date('Y-m-d');
 
