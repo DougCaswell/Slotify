@@ -18,11 +18,11 @@ $(document).ready(function() {
     setTrack(currentPlaylist[0], currentPlaylist, false);
 
     $(".playbackBar .progressBar").mousedown(function() {
-        mousedown = true;
+        mouseDown = true;
     });
     
     $(".playbackBar .progressBar").mousemove(function(e) {
-        if(mousedown) {
+        if(mouseDown) {
             timeFromOffset(e, this);
         }
     });
@@ -31,12 +31,15 @@ $(document).ready(function() {
          timeFromOffset(e, this);
     });
 
+    $(document).mouseup(function() {
+        mouseDown = false;
+    })
 
 
 });
 
 function timeFromOffset(mouse, progressBar) {
-    let percentage = e.offsetX / $(this).width() * 100;
+    let percentage = mouse.offsetX / $(progressBar).width() * 100;
     let seconds = audioElement.audio.duration * (percentage / 100);
     audioElement.setTime(seconds);
 } 

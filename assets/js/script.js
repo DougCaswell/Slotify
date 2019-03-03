@@ -1,6 +1,6 @@
 let currentPlaylist = [];
 let audioElement;
-let mousedown = false;
+let mouseDown = false;
 
 function formatTime(totalSeconds){
     let time = Math.round(totalSeconds);
