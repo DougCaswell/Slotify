@@ -1,18 +1,111 @@
+<?php 
+$songQuery = mysqli_query($con, "SELECT * FROM songs ORDER BY RAND() LIMIT 10");
+
+$resultArray = array();
+
+while($row = mysqli_fetch_array($songQuery)) {
+    array_push($resultArray, $row['id']);
+}
+
+$jsonArray = json_encode($resultArray);
+?>
+
+<script>
+console.log('in script')
+$(document).ready(function() {
+    currentPlaylist = <?php echo $jsonArray; ?>;
+    audioElement = new Audio();
+    setTrack(currentPlaylist[0], currentPlaylist, false);
+
+    $(".playbackBar .progressBar").mousedown(function() {
+        mousedown = true;
+    });
+    
+    $(".playbackBar .progressBar").mousemove(function(e) {
+        if(mousedown) {
+            timeFromOffset(e, this);
+        }
+    });
+    
+    $(".playbackBar .progressBar").mouseup(function(e) {
+         timeFromOffset(e, this);
+    });
+
+
+
+});
+
+function timeFromOffset(mouse, progressBar) {
+    let percentage = e.offsetX / $(this).width() * 100;
+    let seconds = audioElement.audio.duration * (percentage / 100);
+    audioElement.setTime(seconds);
+} 
+
+function setTrack(trackId, newPlayList, play) {
+    $.post("includes/handlers/ajax/getSongJSON.php", { songId: trackId }, function(data) {
+        let track = JSON.parse(data);
+
+        $(".trackName span").text(track.title);
+
+        $.post("includes/handlers/ajax/getArtistJSON.php", { artistId: track.artist }, function(data) {
+            let artist = JSON.parse(data);
+
+            $(".artistName span").text(artist.name);
+            
+        });
+
+        $.post("includes/handlers/ajax/getAlbumJSON.php", { albumId: track.album }, function(data) {
+            let album = JSON.parse(data);
+
+            $(".albumLink img").attr("src", album.artworkPath);
+
+        });
+
+        audioElement.setTrack(track);
+        playSong();
+    })
+
+    if (play) {
+        audioElement.play();
+    }
+}
+
+function playSong () {
+
+    if(audioElement.audio.currentTime == 0) {
+        $.post("includes/handlers/ajax/updatePlays.php", { songId: audioElement.currentlyPlaying.id });
+    }
+
+    $(".controlButton.play").hide();
+    $(".controlButton.pause").show();
+    audioElement.play();
+}
+
+function pauseSong () {
+    $(".controlButton.play").show();
+    $(".controlButton.pause").hide();
+    audioElement.pause();
+}
+
+
+</script>
+
+
 <div id='nowPlayingBarContainer'>
     <div id='nowPlayingBar'>
         <div id='nowPlayingLeft'>
             <div class='content'>
                 <span class='albumLink'>
-                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/5/54/Public_image_ltd_album_cover.jpg/220px-Public_image_ltd_album_cover.jpg" alt="Album" class='albumArtwork'>
+                    <img src="" alt="Album" class='albumArtwork'>
                 </span>
 
                 <div class='trackInfo'>
 
                     <span class='trackName'>
-                        <span>Happy Birthday</span>
+                        <span></span>
                     </span>
                     <span class='artistName'>
-                        <span>Doug Caswell</span>
+                        <span></span>
                     </span>
 
                 </div>
@@ -31,10 +124,10 @@
                     <button class='controlButton previous' title='Previous'>
                         <img src='assets/images/icons/previous.png' alt="Previous">
                     </button>
-                    <button class='controlButton play' title='Play'>
+                    <button class='controlButton play' title='Play' onClick="playSong()">
                         <img src='assets/images/icons/play.png' alt="Play">
                     </button>
-                    <button class='controlButton pause' title='Pause' style='display: none;'>
+                    <button class='controlButton pause' title='Pause' style='display: none;' onClick="pauseSong()">
                         <img src='assets/images/icons/pause.png' alt="Pause">
                     </button>
                     <button class='controlButton next' title='Next'>
