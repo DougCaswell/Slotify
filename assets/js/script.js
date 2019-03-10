@@ -1,6 +1,11 @@
 let currentPlaylist = [];
+let shufflePlaylist = [];
+let tempPlaylist = [];
 let audioElement;
 let mouseDown = false;
+let currentIndex = 0;
+let repeat = false;
+let shuffle = false;
 
 function formatTime(totalSeconds){
     let time = Math.round(totalSeconds);
@@ -20,10 +25,19 @@ function updateTimeProgressBar(audio) {
     $(".playbackBar .progress").css("width", progress + "%");
 }
 
+function updateVolumeProgressBar(audio) {
+    let volume  = audio.volume * 100;
+    $(".volumeBar .progress").css("width", volume + "%");
+}
+
 function Audio() {
 
     this.currentlyPlaying;
     this.audio = document.createElement('audio');
+
+    this.audio.addEventListener("ended", function() {
+        nextSong();
+    });
 
     this.audio.addEventListener("canplay", function() {
         let duration = formatTime(this.duration);
@@ -34,6 +48,10 @@ function Audio() {
         if(this.duration) {
             updateTimeProgressBar(this);
         }
+    });
+
+    this.audio.addEventListener("volumechange", function() {
+        updateVolumeProgressBar(this);
     });
 
     this.play = function() {
