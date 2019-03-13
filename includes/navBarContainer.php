@@ -1,21 +1,25 @@
 <div id='navBarContainer'>
     <nav class='navBar'>
-        <a href="index.php" class='logo'>
+        <span role="link" tabindex="0" onClick="openPage('index.php')" class='logo'>
             <img src="https://img.icons8.com/material/32/07d159/paper-windmill.png" alt="Logo"> <p>Slotify</p>
-        </a>
+        </span>
         <div class="group">
             <div class='navItem'>
-                <a href="search.php" class='navItemLink'>Search <img src="assets/images/icons/search.png" alt="Search" class='icon'></a>
+            <span role='link' tabindex='0' onClick="openPage('search.php')" class='navItemLink'>Search 
+                <img src="assets/images/icons/search.png" alt="Search" class='icon'>
+            </span>
             </div>
         </div>
         <div class="group">
         <div class='navItem'>
-                <a href="browse.php" class='navItemLink'>Browse</a>
-            </div><div class='navItem'>
-                <a href="yourMusic.php" class='navItemLink'>Your Music</a>
-            </div><div class='navItem'>
-                <a href="profile.php" class='navItemLink'>Profile</a>
-            </div>
+            <span role="link" tabindex="0" onClick="openPage('browse.php')"  class='navItemLink'>Browse</span>
+        </div>
+        <div class='navItem'>
+            <span role="link" tabindex="0" onClick="openPage('yourMusic.php')"  class='navItemLink'>Your Music</span>
+        </div>
+        <div class='navItem'>
+            <span role="link" tabindex="0" onClick="openPage('profile.php')"  class='navItemLink'>Profile</span>
+        </div>
         </div>
     </nav>
 </div>
