@@ -131,6 +131,7 @@ function setTrack(trackId, newPlaylist, play) {
             let artist = JSON.parse(data);
 
             $(".artistName span").text(artist.name);
+            $(".artistName span").attr("onClick", "openPage('artist.php?id=" + artist.id + "')");
             
         });
 
@@ -138,6 +139,8 @@ function setTrack(trackId, newPlaylist, play) {
             let album = JSON.parse(data);
 
             $(".albumLink img").attr("src", album.artworkPath);
+            $(".albumLink img").attr("onClick", "openPage('album.php?id=" + album.id + "')");
+            $(".trackName span").attr("onClick", "openPage('album.php?id=" + album.id + "')");
 
         });
 
@@ -204,16 +207,16 @@ function shuffleArray(array) {
         <div id='nowPlayingLeft'>
             <div class='content'>
                 <span class='albumLink'>
-                    <img src="" alt="Album" class='albumArtwork'>
+                    <img role='link' tabindex='0' src="" alt="Album" class='albumArtwork'>
                 </span>
 
                 <div class='trackInfo'>
 
                     <span class='trackName'>
-                        <span></span>
+                        <span role='link' tabindex='0'></span>
                     </span>
                     <span class='artistName'>
-                        <span></span>
+                        <span role='link' tabindex='0'></span>
                     </span>
 
                 </div>

@@ -335,3 +335,6 @@ width: 100%;
 .gridViewContainer h2 {
     text-align: center;
 }
+[role="link"] {
+    cursor: pointer;
+}
