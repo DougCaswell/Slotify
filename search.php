@@ -22,7 +22,7 @@ $(".searchInput").val('');
 $(".searchInput").val('<?php echo $term; ?>');
 
 $(function() {
-    let timer;
+
 
     $(".searchInput").keyup(function() {
         clearTimeout(timer);

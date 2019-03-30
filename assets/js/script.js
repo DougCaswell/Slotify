@@ -6,9 +6,13 @@ let mouseDown = false;
 let currentIndex = 0;
 let repeat = false;
 let shuffle = false;
-let userLoggedIn;
+// let userLoggedIn; seems to work better commented out
+let timer;
 
 function openPage(url) {
+    if(timer != null) {
+        clearTimeout(timer);
+    }
     if(url.indexOf("?") === -1) {
         url = url + "?";
     }
@@ -84,5 +88,22 @@ function Audio() {
 
     this.setTime = function(seconds) {
         this.audio.currentTime = seconds;
+    }
+}
+function createPlaylist() {
+    let popup = prompt("Please enter the name of your playlist");
+    
+    if(popup != null) {
+        
+        $.post("includes/handlers/ajax/createPlaylist.php", {name: popup, username: userLoggedIn}).done(function(error){
+
+            if(error != "") {
+                alert(error);
+                return;
+            }
+
+            openPage("yourMusic.php");
+        })
+
     }
 }
