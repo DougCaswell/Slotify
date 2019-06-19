@@ -10,10 +10,10 @@ let shuffle = false;
 let timer;
 
 function openPage(url) {
-    if(timer != null) {
+    if (timer != null) {
         clearTimeout(timer);
     }
-    if(url.indexOf("?") === -1) {
+    if (url.indexOf("?") === -1) {
         url = url + "?";
     }
     let encodedUrl = encodeURI(url + "&userLoggedIn=" + userLoggedIn);
@@ -22,7 +22,7 @@ function openPage(url) {
     history.pushState(null, null, url);
 }
 
-function formatTime(totalSeconds){
+function formatTime(totalSeconds) {
     let time = Math.round(totalSeconds);
     let minutes = Math.floor(time / 60);
     let seconds = time - minutes * 60;
@@ -36,12 +36,12 @@ function updateTimeProgressBar(audio) {
     $(".progressTime.current").text(formatTime(audio.currentTime));
     $(".progressTime.remaining").text(formatTime(audio.duration - audio.currentTime));
 
-    let progress  = audio.currentTime / audio.duration * 100;
+    let progress = audio.currentTime / audio.duration * 100;
     $(".playbackBar .progress").css("width", progress + "%");
 }
 
 function updateVolumeProgressBar(audio) {
-    let volume  = audio.volume * 100;
+    let volume = audio.volume * 100;
     $(".volumeBar .progress").css("width", volume + "%");
 }
 
@@ -54,50 +54,50 @@ function Audio() {
     this.currentlyPlaying;
     this.audio = document.createElement('audio');
 
-    this.audio.addEventListener("ended", function() {
+    this.audio.addEventListener("ended", function () {
         nextSong();
     });
 
-    this.audio.addEventListener("canplay", function() {
+    this.audio.addEventListener("canplay", function () {
         let duration = formatTime(this.duration);
         $(".progressTime.remaining").text(duration);
     });
 
-    this.audio.addEventListener("timeupdate", function() {
-        if(this.duration) {
+    this.audio.addEventListener("timeupdate", function () {
+        if (this.duration) {
             updateTimeProgressBar(this);
         }
     });
 
-    this.audio.addEventListener("volumechange", function() {
+    this.audio.addEventListener("volumechange", function () {
         updateVolumeProgressBar(this);
     });
 
-    this.play = function() {
+    this.play = function () {
         this.audio.play()
     }
 
-    this.setTrack = function(track) {
+    this.setTrack = function (track) {
         this.currentlyPlaying = track;
         this.audio.src = track.path;
     }
 
-    this.pause = function() {
+    this.pause = function () {
         this.audio.pause();
     }
 
-    this.setTime = function(seconds) {
+    this.setTime = function (seconds) {
         this.audio.currentTime = seconds;
     }
 }
 function createPlaylist() {
     let popup = prompt("Please enter the name of your playlist");
-    
-    if(popup != null) {
-        
-        $.post("includes/handlers/ajax/createPlaylist.php", {name: popup, username: userLoggedIn}).done(function(error){
 
-            if(error != "") {
+    if (popup != null) {
+
+        $.post("includes/handlers/ajax/createPlaylist.php", { name: popup, username: userLoggedIn }).done(function (error) {
+
+            if (error != "") {
                 alert(error);
                 return;
             }
@@ -105,5 +105,22 @@ function createPlaylist() {
             openPage("yourMusic.php");
         })
 
+    }
+}
+
+function deletePlaylist(playlistId) {
+    let prompt = confirm("Are you sure you want to delete this playlist?");
+
+    if (prompt) {
+
+        $.post("includes/handlers/ajax/deletePlaylist.php", { playlistId: playlistId }).done(function (error) {
+
+            if (error != "") {
+                alert(error);
+                return;
+            }
+
+            openPage("yourMusic.php");
+        })
     }
 }
