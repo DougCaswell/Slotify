@@ -380,3 +380,32 @@ width: 100%;
     border: 3px solid #282828;
     padding: 10px;
 }
+.optionsMenu {
+    position: fixed;
+    background-color: #282828;
+    width: 200px;
+    border: 1px solid #00000026;
+    border-radius: 3px;
+    z-index: 1000;
+    display: none;
+}
+.optionsMenu .item {
+    width: 100%;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    font-weight: 400;
+    color: #939393cc;
+    cursor: pointer;
+    height: 40px;
+    background-color: #282828;
+    font-size: 14px;
+}
+.optionsMenu .item:hover {
+    color: #fff;
+    background-color:  #333;
+    border-color: #333;
+}
+.optionsMenu select {
+    border: none;
+    -webkit-appearance: none;
+}
