@@ -408,4 +408,5 @@ width: 100%;
 .optionsMenu select {
     border: none;
     -webkit-appearance: none;
+    -moz-appearance: none;
 }
