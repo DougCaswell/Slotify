@@ -18,7 +18,7 @@
             <span role="link" tabindex="0" onClick="openPage('yourMusic.php')"  class='navItemLink'>Your Music</span>
         </div>
         <div class='navItem'>
-            <span role="link" tabindex="0" onClick="openPage('profile.php')"  class='navItemLink'>Profile</span>
+            <span role="link" tabindex="0" onClick="openPage('settings.php')"  class='navItemLink'><?php echo $userLoggedIn->getUsername(); ?></span>
         </div>
         </div>
     </nav>

@@ -369,7 +369,8 @@ width: 100%;
     margin: 15px;
     display: block;
 }
-.playlistsContainer .gridViewContainer .buttonItems button {
+.playlistsContainer .gridViewContainer .buttonItems button,
+.entityInfo .button {
     display: block;
     margin: 0 auto 20px auto;
 }
@@ -409,4 +410,34 @@ width: 100%;
     border: none;
     -webkit-appearance: none;
     -moz-appearance: none;
+}
+
+.userInfo h1 {
+    text-align: center;
+}
+.userDetails {
+    padding: 20px;
+}
+.userDetails .container h2 {
+    text-align: center;
+}
+.userDetails .container input[type="text"],
+.userDetails .container input[type="password"],
+.userDetails .container .button {
+    display: block;
+    margin: 16px auto;
+}
+.userDetails .container input[type="text"],
+.userDetails .container input[type="password"] {
+    height: 50px;
+    width: 100%;
+    background: #1f1f1f;
+    border: none;
+    font-size: 18px;
+    font-weight: 300;
+    padding: 0 20px;
+}
+.userDetails .container .message {
+    color: #2ebd59;
+    font-weight: 300;
 }

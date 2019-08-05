@@ -192,3 +192,29 @@ function hideOptionsMenu() {
         menu.css("display", "none");
     }
 }
+
+function logout() {
+    $.post("includes/handlers/ajax/logout.php", function () {
+        location.reload();
+    });
+}
+
+function updateEmail(emailClass) {
+    let emailValue = $("." + emailClass).val();
+
+    $.post("includes/handlers/ajax/updateEmail.php", { email: emailValue, username: userLoggedIn })
+        .done(function (response) {
+            $("." + emailClass).nextAll(".message").text(response);
+        })
+}
+
+function updatePassword(oldPasswordClass, newPasswordClass1, newPasswordClass2) {
+    let oldPassword = $("." + oldPasswordClass).val();
+    let newPassword1 = $("." + newPasswordClass1).val();
+    let newPassword2 = $("." + newPasswordClass2).val();
+
+    $.post("includes/handlers/ajax/updatePassword.php", { oldPassword, newPassword1, newPassword2, username: userLoggedIn })
+        .done(function (response) {
+            $("." + oldPasswordClass).nextAll(".message").text(response);
+        })
+}
