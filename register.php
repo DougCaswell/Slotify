@@ -135,6 +135,8 @@
                     <li>Discover music you'll fall in love with</li>
                     <li>Create your own playlists</li>
                     <li>Follow artists to keep up to date</li>
+                    <li>Icons used are from Icons8</li>
+                    <li>Music is from BenSound </li>
                 </ul>
             </div>
 
